@@ -129,3 +129,47 @@ retrieveSavedHourlyTask();
 
 // function that updates hour to current hour //
 setDynamicClassHour();
+
+$("#timeBlocks").on("click",".description",function(){
+    var description = $(this)
+    .text()
+    .trim()
+
+    var pClass = $(this).attr("class")
+    var id = $(this).attr("id")
+    
+    var textInput = $("<textarea>")
+    .val(description)
+    .addClass(pClass)
+    .attr("id",id)
+
+    $(this).replaceWith(textInput)
+    textInput.trigger("focus")
+})
+
+$("#timeBlocks").on("blur", "textarea", function() {
+    var text = $(this)
+    .val()
+    .trim();
+
+    var pClass = $(this).attr("class")
+    var id = $(this).attr("id")
+
+    var p = $("<p>")
+    .addClass(pClass)
+    .text(text)
+    .attr("id",id)
+
+     $(this).replaceWith(p);
+
+     setDynamicClassHour()
+
+});
+
+
+$("#timeBlocks").on("click",".saveBtn", function() {
+    var btnId = $(this).attr("id")
+    var id = btnId.split("-")[1]
+    var description = $("#"+id).text()
+    createHourlyEntry(currentDayShort,id,description)
+});
