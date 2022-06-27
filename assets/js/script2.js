@@ -33,7 +33,7 @@ function setDynamicClassHour(){
     var pastHours = [];
     var futureHours = [];
 
-    //Check current hour and splice the workHours array to past and future hours
+    // create for loop to check for current time, separates the past and future hours with splice //
     for(var i=0;i<workHours.length;i++){
         if(workHours[i] == currentTime){
             pastHours = workHours.splice(0,i)

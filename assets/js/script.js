@@ -27,3 +27,28 @@ function createTimeBlocks(){
                                   </div>`)
     }
 };
+
+function setDynamicClassHour() {
+    var pastHours = [];
+    var futureHours = [];
+
+    // create for loop to check for current time, separates the past and future hours with splice //
+    for(var i=0;i<workHours.length;i++){
+        if(workHours[i] == currentTime){
+            pastHours = workHours.splice(0,i)
+            futureHours = workHours.splice(1,workHours.length-1)
+            $("#"+currentTime).addClass("present")
+            }
+        }
+
+    //  Creates a class for past hours //
+    for(var i = 0; i < pastHours.length; i++){
+        $("#"+pastHours[i]).addClass("past")
+    }
+    // Creates a class for future hours //
+
+    for(var i = 0; i < futureHours.length; i++){
+        $("#"+futureHours[i]).addClass("future")
+    }
+
+};
