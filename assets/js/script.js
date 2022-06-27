@@ -89,15 +89,15 @@ function createHourlyEntry(date,id,description){
             while (descriptionOverridden === false && i < workDayScheduler.length){
 
                 if(workDayScheduler[i].date == currentDayShort && workDayScheduler[i].id == id){
-                    console.log("workDayScheduler at " + i + " index, date is: " + workDayScheduler[i].date + " and id is: "+ workDayScheduler[i].id)
+                    //console.log("workDayScheduler at " + i + " index, date is: " + workDayScheduler[i].date + " and id is: "+ workDayScheduler[i].id)
                     workDayScheduler[i].description = description
-                    console.log(workDayScheduler)
+                    //console.log(workDayScheduler)
                     descriptionOverridden = true
                     localStorage.setItem("workDayScheduler",JSON.stringify(workDayScheduler))
                     break;
                 }
 
-                if(descriptionOverridden === false && i == workDayScheduler.length-1){
+                if(descriptionOverridden === false && i == workDayScheduler.length-1) {
                     workDayScheduler.push({"date":date,"id":id,"description":description} )
                     localStorage.setItem("workDayScheduler",JSON.stringify(workDayScheduler))
                 }
