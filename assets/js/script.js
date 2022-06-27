@@ -52,3 +52,36 @@ function setDynamicClassHour() {
     }
 
 };
+
+
+// functions for local storage //
+
+function getLocalStorage(){
+    return JSON.parse(localStorage.getItem("workDayScheduler"))
+}
+
+function clearLocalStorage(){
+    localStorage.removeItem("workDayScheduler")
+}
+
+function clearLocalStorageNewDay(){
+    var workDayScheduler = getLocalStorage();
+    if(workDayScheduler){
+        if(workDayScheduler[0].date == yesterdayShort){
+            clearLocalStorage();
+        }
+    }
+};
+
+// call functions for to start page //
+
+// creates blocks //
+createTimeBlocks();
+// clears storage at start of new day //
+clearLocalStorageNewDay();
+// saves tasks to storage //
+
+retrieveSavedHourlyTask();
+
+// function that updates hour to current hour //
+setDynamicClassHour();
