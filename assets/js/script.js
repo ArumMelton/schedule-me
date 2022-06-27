@@ -6,7 +6,6 @@ var currentDayShort = moment().format("L");
 var yesterdayShort = moment().subtract(1, 'days').format("L");
 var currentTime = moment().format("hA");
 
-
 $("#currentDay").text(currentDay);
 
 // create time blocks and connect to DOM //
@@ -14,7 +13,7 @@ $("#currentDay").text(currentDay);
 function createTimeBlocks(){
     for(var i=0;i<workHours.length;i++){
         var timeBlock = workHours[i]
-        $("#timeBlocks").append(`<div class="row d-flex justify-content-center" >
+            $("#timeBlocks").append(`<div class="row d-flex justify-content-center" >
                                         <div class="col-2 p-0">
                                                 <p class="hour p1-1 m-0">${timeBlock}</p>
                                         </div>
@@ -29,8 +28,8 @@ function createTimeBlocks(){
 };
 
 function setDynamicClassHour() {
-    var pastHours = [];
-    var futureHours = [];
+        var pastHours = [];
+        var futureHours = [];
 
     // create for loop to check for current time, separates the past and future hours with splice //
     for(var i=0;i<workHours.length;i++){
@@ -72,7 +71,52 @@ function clearLocalStorageNewDay(){
         }
     }
 };
+// pushes the infromation into the local storgae array //
 
+function createHourlyEntry(date,id,description){
+    var workDayScheduler = getLocalStorage()
+    if (!workDayScheduler){
+      var workDayScheduler = []
+      var newEntry = {"date":date,"id":id,"description":description}
+        workDayScheduler.push(newEntry)
+        localStorage.setItem("workDayScheduler",JSON.stringify(workDayScheduler))
+
+    } else {
+
+        var descriptionOverridden = false
+        var i = 0
+
+            while (descriptionOverridden === false && i < workDayScheduler.length){
+
+                if(workDayScheduler[i].date == currentDayShort && workDayScheduler[i].id == id){
+                    console.log("workDayScheduler at " + i + " index, date is: " + workDayScheduler[i].date + " and id is: "+ workDayScheduler[i].id)
+                    workDayScheduler[i].description = description
+                    console.log(workDayScheduler)
+                    descriptionOverridden = true
+                    localStorage.setItem("workDayScheduler",JSON.stringify(workDayScheduler))
+                    break;
+                }
+
+                if(descriptionOverridden === false && i == workDayScheduler.length-1){
+                    workDayScheduler.push({"date":date,"id":id,"description":description} )
+                    localStorage.setItem("workDayScheduler",JSON.stringify(workDayScheduler))
+                }
+
+                i++
+            }
+    }
+};
+
+// grabs tasks from local storage //
+
+function retrieveSavedHourlyTask(){
+    var workDayScheduler = getLocalStorage();
+        if(workDayScheduler){
+            for(var i = 0; i < workDayScheduler.length; i++){
+                $("#"+workDayScheduler[i].id).text(workDayScheduler[i].description)
+            }
+        }
+};
 // call functions for to start page //
 
 // creates blocks //
