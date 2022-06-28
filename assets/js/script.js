@@ -1,17 +1,17 @@
 // declare date variables for moment //
 
 var workHours = ["9AM", "10AM", "11AM", "12PM", "1PM", "2PM", "3PM", "4PM", "5PM"];
-var currentDay = moment().format("dddd, MMMM Do YYYY");
-var currentDayShort = moment().format("L");
+var today = moment().format("dddd, MMMM Do YYYY");
+var todayShort = moment().format("L");
 var yesterdayShort = moment().subtract(1, 'days').format("L");
 var currentTime = moment().format("hA");
 
-$("#currentDay").text(currentDay);
+$("#today").text(today);
 
 // create time blocks and connect to DOM //
 
 function createTimeBlocks(){
-    for(var i=0;i<workHours.length;i++){
+    for (var i=0;i<workHours.length;i++) {
         var timeBlock = workHours[i]
             $("#timeBlocks").append(`<div class="row d-flex justify-content-center" >
                                         <div class="col-2 p-0">
@@ -27,12 +27,12 @@ function createTimeBlocks(){
     }
 };
 
-function setDynamicClassHour() {
+function setClassHour() {
         var pastHours = [];
         var futureHours = [];
 
     // create for loop to check for current time, separates the past and future hours with splice //
-    for(var i=0;i<workHours.length;i++){
+    for (var i=0;i<workHours.length;i++){
         if(workHours[i] == currentTime){
             pastHours = workHours.splice(0,i)
             futureHours = workHours.splice(1,workHours.length-1)
@@ -41,12 +41,12 @@ function setDynamicClassHour() {
         }
 
     //  Creates a class for past hours //
-    for(var i = 0; i < pastHours.length; i++){
+    for (var i = 0; i < pastHours.length; i++){
         $("#"+pastHours[i]).addClass("past")
     }
     // Creates a class for future hours //
 
-    for(var i = 0; i < futureHours.length; i++){
+    for (var i = 0; i < futureHours.length; i++){
         $("#"+futureHours[i]).addClass("future")
     }
 
@@ -55,15 +55,15 @@ function setDynamicClassHour() {
 
 // functions for local storage //
 
-function getLocalStorage(){
+function getLocalStorage() {
     return JSON.parse(localStorage.getItem("workDayScheduler"))
 }
 
-function clearLocalStorage(){
+function clearLocalStorage() {
     localStorage.removeItem("workDayScheduler")
 }
 
-function clearLocalStorageNewDay(){
+function clearLocalStorageNewDay() {
     var workDayScheduler = getLocalStorage();
     if(workDayScheduler){
         if(workDayScheduler[0].date == yesterdayShort){
@@ -73,7 +73,7 @@ function clearLocalStorageNewDay(){
 };
 // pushes the infromation into the local storgae array //
 
-function createHourlyEntry(date,id,description){
+function createHourlyEntry(date,id,description) {
     var workDayScheduler = getLocalStorage()
     if (!workDayScheduler){
       var workDayScheduler = []
@@ -88,7 +88,7 @@ function createHourlyEntry(date,id,description){
 
             while (descriptionOverridden === false && i < workDayScheduler.length){
 
-                if(workDayScheduler[i].date == currentDayShort && workDayScheduler[i].id == id){
+                if(workDayScheduler[i].date == todayShort && workDayScheduler[i].id == id) {
                     //console.log("workDayScheduler at " + i + " index, date is: " + workDayScheduler[i].date + " and id is: "+ workDayScheduler[i].id)
                     workDayScheduler[i].description = description
                     //console.log(workDayScheduler)
@@ -111,7 +111,7 @@ function createHourlyEntry(date,id,description){
 
 function retrieveSavedHourlyTask(){
     var workDayScheduler = getLocalStorage();
-        if(workDayScheduler){
+        if(workDayScheduler) {
             for(var i = 0; i < workDayScheduler.length; i++){
                 $("#"+workDayScheduler[i].id).text(workDayScheduler[i].description)
             }
@@ -128,16 +128,16 @@ clearLocalStorageNewDay();
 retrieveSavedHourlyTask();
 
 // function that updates hour to current hour //
-setDynamicClassHour();
+setClassHour();
 
-$("#timeBlocks").on("click",".description",function(){
+$("#timeBlocks").on("click",".description",function() {
     var description = $(this)
     .text()
     .trim()
 
     var pClass = $(this).attr("class")
     var id = $(this).attr("id")
-    
+
     var textInput = $("<textarea>")
     .val(description)
     .addClass(pClass)
@@ -146,7 +146,7 @@ $("#timeBlocks").on("click",".description",function(){
     $(this).replaceWith(textInput)
     textInput.trigger("focus")
 })
-
+//  sets class for entered text //
 $("#timeBlocks").on("blur", "textarea", function() {
     var text = $(this)
     .val()
@@ -162,7 +162,7 @@ $("#timeBlocks").on("blur", "textarea", function() {
 
      $(this).replaceWith(p);
 
-     setDynamicClassHour()
+     setClassHour()
 
 });
 
@@ -171,5 +171,5 @@ $("#timeBlocks").on("click",".saveBtn", function() {
     var btnId = $(this).attr("id")
     var id = btnId.split("-")[1]
     var description = $("#"+id).text()
-    createHourlyEntry(currentDayShort,id,description)
+    createHourlyEntry(todayShort,id,description)
 });

@@ -6,7 +6,7 @@ body {
 }
 
 
-textarea{
+textarea {
   background: transparent;
   border: none;
   resize: none;
@@ -23,12 +23,12 @@ textarea{
   border-bottom: 10px solid black;
 }
 
-.description{
+.description {
   white-space: pre-wrap;
   border: 0.5px solid black;
 }
 
-.time-block{
+.time-block {
   text-align: center;
   border-radius: 15px;
 }
@@ -51,15 +51,16 @@ textarea{
   color: black;
 }
 
+.future {
+  background-color: #77dd77;
+  color: black;
+}
+
 .present {
   background-color: #ff6961;
   color: black;
 }
 
-.future {
-  background-color: #77dd77;
-  color: black;
-}
 
 .saveBtn {
   border-left: 1px solid black;
