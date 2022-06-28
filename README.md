@@ -25,6 +25,10 @@ THEN the saved events persist
 
 My biggest challenge creating this application was understanding how to cleanly generate the dynamic html to create the input boxes.
 
+Github Repo: https://github.com/ArumMelton/schedule-me
+
+Deployed Application: https://arummelton.github.io/schedule-me/
+
 Below is a screenshot of the deployed application being used.
 
 ![Screenshot](./assets/images/ScheduleMeScreenshot.png)
